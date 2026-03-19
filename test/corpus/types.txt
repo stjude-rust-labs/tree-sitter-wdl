@@ -1,0 +1,147 @@
+================================================================================
+Struct definition
+================================================================================
+
+version 1.2
+
+struct Person {
+    String name
+    Int age
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (struct
+    (identifier)
+    (declaration
+      (type
+        (primitive_type))
+      (identifier))
+    (declaration
+      (type
+        (primitive_type))
+      (identifier))))
+
+================================================================================
+Enum definition
+================================================================================
+
+version 1.2
+
+enum Color {
+    Red
+    Green
+    Blue
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (enum
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)))
+
+================================================================================
+Optional type
+================================================================================
+
+version 1.2
+
+struct Foo {
+    Int? x
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (struct
+    (identifier)
+    (declaration
+      (type
+        (primitive_type))
+      (identifier))))
+
+================================================================================
+Array type with nonempty
+================================================================================
+
+version 1.2
+
+struct Foo {
+    Array[File]+ files
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (struct
+    (identifier)
+    (declaration
+      (type
+        (array_type
+          (type
+            (primitive_type))))
+      (identifier))))
+
+================================================================================
+Map type
+================================================================================
+
+version 1.2
+
+struct Foo {
+    Map[String, Int] counts
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (struct
+    (identifier)
+    (declaration
+      (type
+        (map_type
+          (type
+            (primitive_type))
+          (type
+            (primitive_type))))
+      (identifier))))
+
+================================================================================
+Pair type
+================================================================================
+
+version 1.2
+
+struct Foo {
+    Pair[String, Int] item
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (struct
+    (identifier)
+    (declaration
+      (type
+        (pair_type
+          (type
+            (primitive_type))
+          (type
+            (primitive_type))))
+      (identifier))))

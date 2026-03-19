@@ -1,0 +1,386 @@
+================================================================================
+Arithmetic expressions
+================================================================================
+
+version 1.2
+
+task t {
+    Int x = 1 + 2 * 3
+
+    command <<<>>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (declaration
+      (type
+        (primitive_type))
+      (identifier)
+      (expression
+        (addition_expression
+          (expression
+            (primary_expression
+              (integer_literal)))
+          (expression
+            (multiplication_expression
+              (expression
+                (primary_expression
+                  (integer_literal)))
+              (expression
+                (primary_expression
+                  (integer_literal))))))))
+    (command_block
+      (command_block_heredoc))))
+
+================================================================================
+Ternary expression
+================================================================================
+
+version 1.2
+
+task t {
+    String x = if true then "yes" else "no"
+
+    command <<<>>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (declaration
+      (type
+        (primitive_type))
+      (identifier)
+      (expression
+        (ternary_expression
+          (expression
+            (primary_expression
+              (boolean_literal)))
+          (expression
+            (primary_expression
+              (string_literal
+                (double_quoted_string
+                  (string_text_double)))))
+          (expression
+            (primary_expression
+              (string_literal
+                (double_quoted_string
+                  (string_text_double))))))))
+    (command_block
+      (command_block_heredoc))))
+
+================================================================================
+Function call expression
+================================================================================
+
+version 1.2
+
+task t {
+    String x = read_string(stdout())
+
+    command <<<>>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (declaration
+      (type
+        (primitive_type))
+      (identifier)
+      (expression
+        (apply_expression
+          (identifier)
+          (expression
+            (apply_expression
+              (identifier))))))
+    (command_block
+      (command_block_heredoc))))
+
+================================================================================
+Member access
+================================================================================
+
+version 1.2
+
+workflow w {
+    output {
+        String x = foo.bar
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (workflow
+    (identifier)
+    (output_block
+      (bound_declaration
+        (type
+          (primitive_type))
+        (identifier)
+        (expression
+          (member_expression
+            (expression
+              (primary_expression
+                (identifier)))
+            (identifier)))))))
+
+================================================================================
+Index expression
+================================================================================
+
+version 1.2
+
+task t {
+    String x = arr[0]
+
+    command <<<>>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (declaration
+      (type
+        (primitive_type))
+      (identifier)
+      (expression
+        (index_expression
+          (expression
+            (primary_expression
+              (identifier)))
+          (expression
+            (primary_expression
+              (integer_literal))))))
+    (command_block
+      (command_block_heredoc))))
+
+================================================================================
+Logical expressions
+================================================================================
+
+version 1.2
+
+task t {
+    Boolean x = a && b || !c
+
+    command <<<>>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (declaration
+      (type
+        (primitive_type))
+      (identifier)
+      (expression
+        (or_expression
+          (expression
+            (and_expression
+              (expression
+                (primary_expression
+                  (identifier)))
+              (expression
+                (primary_expression
+                  (identifier)))))
+          (expression
+            (unary_expression
+              (expression
+                (primary_expression
+                  (identifier))))))))
+    (command_block
+      (command_block_heredoc))))
+
+================================================================================
+Array literal
+================================================================================
+
+version 1.2
+
+task t {
+    Array[Int] x = [1, 2, 3]
+
+    command <<<>>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (declaration
+      (type
+        (array_type
+          (type
+            (primitive_type))))
+      (identifier)
+      (expression
+        (primary_expression
+          (array_literal
+            (expression
+              (primary_expression
+                (integer_literal)))
+            (expression
+              (primary_expression
+                (integer_literal)))
+            (expression
+              (primary_expression
+                (integer_literal)))))))
+    (command_block
+      (command_block_heredoc))))
+
+================================================================================
+Map literal
+================================================================================
+
+version 1.2
+
+task t {
+    Map[String, Int] x = {"a": 1, "b": 2}
+
+    command <<<>>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (declaration
+      (type
+        (map_type
+          (type
+            (primitive_type))
+          (type
+            (primitive_type))))
+      (identifier)
+      (expression
+        (primary_expression
+          (map_literal
+            (map_entry
+              (expression
+                (primary_expression
+                  (string_literal
+                    (double_quoted_string
+                      (string_text_double)))))
+              (expression
+                (primary_expression
+                  (integer_literal))))
+            (map_entry
+              (expression
+                (primary_expression
+                  (string_literal
+                    (double_quoted_string
+                      (string_text_double)))))
+              (expression
+                (primary_expression
+                  (integer_literal))))))))
+    (command_block
+      (command_block_heredoc))))
+
+================================================================================
+Struct literal
+================================================================================
+
+version 1.2
+
+task t {
+    MyStruct x = MyStruct {name: "test", value: 42}
+
+    command <<<>>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (declaration
+      (type
+        (user_type
+          (identifier)))
+      (identifier)
+      (expression
+        (primary_expression
+          (struct_literal
+            (identifier)
+            (object_field
+              (identifier)
+              (expression
+                (primary_expression
+                  (string_literal
+                    (double_quoted_string
+                      (string_text_double))))))
+            (object_field
+              (identifier)
+              (expression
+                (primary_expression
+                  (integer_literal))))))))
+    (command_block
+      (command_block_heredoc))))
+
+================================================================================
+String placeholder
+================================================================================
+
+version 1.2
+
+task t {
+    String x = "hello ~{name}"
+
+    command <<<>>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (declaration
+      (type
+        (primitive_type))
+      (identifier)
+      (expression
+        (primary_expression
+          (string_literal
+            (double_quoted_string
+              (string_text_double)
+              (string_placeholder
+                (expression
+                  (primary_expression
+                    (identifier)))))))))
+    (command_block
+      (command_block_heredoc))))

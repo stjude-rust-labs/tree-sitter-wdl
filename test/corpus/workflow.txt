@@ -1,0 +1,194 @@
+================================================================================
+Minimal workflow
+================================================================================
+
+version 1.2
+
+workflow hello {
+    call my_task
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (workflow
+    (identifier)
+    (call
+      (qualified_identifier
+        (identifier)))))
+
+================================================================================
+Call with alias
+================================================================================
+
+version 1.2
+
+workflow w {
+    call my_task as renamed
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (workflow
+    (identifier)
+    (call
+      (qualified_identifier
+        (identifier))
+      (identifier))))
+
+================================================================================
+Call with multiple after clauses
+================================================================================
+
+version 1.2
+
+workflow w {
+    call stepA
+    call stepB
+    call stepC after stepA after stepB
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (workflow
+    (identifier)
+    (call
+      (qualified_identifier
+        (identifier)))
+    (call
+      (qualified_identifier
+        (identifier)))
+    (call
+      (qualified_identifier
+        (identifier))
+      (identifier)
+      (identifier))))
+
+================================================================================
+Call with inputs
+================================================================================
+
+version 1.2
+
+workflow w {
+    call my_task {
+        input:
+            x = 1,
+            y = "hello",
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (workflow
+    (identifier)
+    (call
+      (qualified_identifier
+        (identifier))
+      (call_body
+        (call_inputs
+          (call_input
+            (identifier)
+            (expression
+              (primary_expression
+                (integer_literal))))
+          (call_input
+            (identifier)
+            (expression
+              (primary_expression
+                (string_literal
+                  (double_quoted_string
+                    (string_text_double)))))))))))
+
+================================================================================
+Scatter
+================================================================================
+
+version 1.2
+
+workflow w {
+    scatter (i in items) {
+        call my_task
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (workflow
+    (identifier)
+    (scatter
+      (identifier)
+      (expression
+        (primary_expression
+          (identifier)))
+      (call
+        (qualified_identifier
+          (identifier))))))
+
+================================================================================
+Conditional
+================================================================================
+
+version 1.2
+
+workflow w {
+    if (x > 0) {
+        call my_task
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (workflow
+    (identifier)
+    (conditional
+      (expression
+        (comparison_expression
+          (expression
+            (primary_expression
+              (identifier)))
+          (expression
+            (primary_expression
+              (integer_literal)))))
+      (call
+        (qualified_identifier
+          (identifier))))))
+
+================================================================================
+Qualified call
+================================================================================
+
+version 1.2
+
+workflow w {
+    call lib.my_task
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (workflow
+    (identifier)
+    (call
+      (qualified_identifier
+        (identifier)
+        (identifier)))))

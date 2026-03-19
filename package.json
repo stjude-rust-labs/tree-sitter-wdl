@@ -1,0 +1,33 @@
+{
+  "name": "tree-sitter-wdl",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for WDL (Workflow Description Language)",
+  "license": "MIT OR Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stjude-rust-labs/tree-sitter-wdl"
+  },
+  "keywords": [
+    "parser",
+    "tree-sitter",
+    "wdl"
+  ],
+  "devDependencies": {
+    "tree-sitter-cli": "^0.26.7"
+  },
+  "scripts": {
+    "build": "tree-sitter generate",
+    "test": "tree-sitter test",
+    "parse": "tree-sitter parse"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.wdl",
+      "file-types": [
+        "wdl"
+      ],
+      "highlights": "queries/highlights.scm",
+      "injections": "queries/injections.scm"
+    }
+  ]
+}

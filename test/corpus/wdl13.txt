@@ -1,0 +1,250 @@
+================================================================================
+Enum definition
+================================================================================
+
+version 1.3
+
+enum Color {
+    Red
+    Green
+    Blue
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (enum
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)))
+
+================================================================================
+Env declaration in input
+================================================================================
+
+version 1.3
+
+task t {
+    input {
+        env String path
+        env Int ncpu = 4
+    }
+
+    command <<<>>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (input_block
+      (declaration
+        (type
+          (primitive_type))
+        (identifier))
+      (declaration
+        (type
+          (primitive_type))
+        (identifier)
+        (expression
+          (primary_expression
+            (integer_literal)))))
+    (command_block
+      (command_block_heredoc))))
+
+================================================================================
+Env bound declaration in task body
+================================================================================
+
+version 1.3
+
+task t {
+    env String x = "hello"
+
+    command <<<>>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (declaration
+      (type
+        (primitive_type))
+      (identifier)
+      (expression
+        (primary_expression
+          (string_literal
+            (double_quoted_string
+              (string_text_double))))))
+    (command_block
+      (command_block_heredoc))))
+
+================================================================================
+Conditional with else if and else
+================================================================================
+
+version 1.3
+
+workflow w {
+    input {
+        Int x
+    }
+
+    if (x > 10) {
+        call taskA
+    } else if (x > 5) {
+        call taskB
+    } else {
+        call taskC
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (workflow
+    (identifier)
+    (input_block
+      (declaration
+        (type
+          (primitive_type))
+        (identifier)))
+    (conditional
+      (expression
+        (comparison_expression
+          (expression
+            (primary_expression
+              (identifier)))
+          (expression
+            (primary_expression
+              (integer_literal)))))
+      (call
+        (qualified_identifier
+          (identifier)))
+      (conditional_else_if
+        (expression
+          (comparison_expression
+            (expression
+              (primary_expression
+                (identifier)))
+            (expression
+              (primary_expression
+                (integer_literal)))))
+        (call
+          (qualified_identifier
+            (identifier))))
+      (conditional_else
+        (call
+          (qualified_identifier
+            (identifier)))))))
+
+================================================================================
+Conditional with only else
+================================================================================
+
+version 1.3
+
+workflow w {
+    if (flag) {
+        call taskA
+    } else {
+        call taskB
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (workflow
+    (identifier)
+    (conditional
+      (expression
+        (primary_expression
+          (identifier)))
+      (call
+        (qualified_identifier
+          (identifier)))
+      (conditional_else
+        (call
+          (qualified_identifier
+            (identifier)))))))
+
+================================================================================
+Conditional with multiple else if
+================================================================================
+
+version 1.3
+
+workflow w {
+    if (x > 10) {
+        call taskA
+    } else if (x > 5) {
+        call taskB
+    } else if (x > 0) {
+        call taskC
+    } else {
+        call taskD
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (workflow
+    (identifier)
+    (conditional
+      (expression
+        (comparison_expression
+          (expression
+            (primary_expression
+              (identifier)))
+          (expression
+            (primary_expression
+              (integer_literal)))))
+      (call
+        (qualified_identifier
+          (identifier)))
+      (conditional_else_if
+        (expression
+          (comparison_expression
+            (expression
+              (primary_expression
+                (identifier)))
+            (expression
+              (primary_expression
+                (integer_literal)))))
+        (call
+          (qualified_identifier
+            (identifier))))
+      (conditional_else_if
+        (expression
+          (comparison_expression
+            (expression
+              (primary_expression
+                (identifier)))
+            (expression
+              (primary_expression
+                (integer_literal)))))
+        (call
+          (qualified_identifier
+            (identifier))))
+      (conditional_else
+        (call
+          (qualified_identifier
+            (identifier)))))))

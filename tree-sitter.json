@@ -1,0 +1,26 @@
+{
+  "grammars": [
+    {
+      "name": "wdl",
+      "camelCase": false,
+      "scope": "source.wdl",
+      "path": ".",
+      "file-types": ["wdl"],
+      "highlights": "queries/highlights.scm",
+      "injections": "queries/injections.scm"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT OR Apache-2.0",
+    "description": "Tree-sitter grammar for WDL (Workflow Description Language)",
+    "authors": [
+      {
+        "name": "St. Jude Rust Labs"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/stjude-rust-labs/tree-sitter-wdl"
+    }
+  }
+}

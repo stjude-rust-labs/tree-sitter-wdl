@@ -1,0 +1,248 @@
+================================================================================
+Minimal task with heredoc
+================================================================================
+
+version 1.2
+
+task hello {
+    command <<<
+        echo "hello"
+    >>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (command_block
+      (command_block_heredoc
+        (command_text_heredoc)))))
+
+================================================================================
+Task with curly command block
+================================================================================
+
+version 1.2
+
+task hello {
+    command {
+        echo "hello"
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (command_block
+      (command_block_curly
+        (command_text_curly)))))
+
+================================================================================
+Task with runtime expressions
+================================================================================
+
+version 1.2
+
+task aligned {
+    input {
+        Int ncpu
+    }
+
+    command <<<
+        echo "run"
+    >>>
+
+    runtime {
+        cpu: ncpu
+        memory: "8 GiB"
+    }
+
+    output {
+        String result = read_string(stdout())
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (input_block
+      (declaration
+        (type
+          (primitive_type))
+        (identifier)))
+    (command_block
+      (command_block_heredoc
+        (command_text_heredoc)))
+    (runtime_block
+      (runtime_attribute
+        (identifier)
+        (expression
+          (primary_expression
+            (identifier))))
+      (runtime_attribute
+        (identifier)
+        (expression
+          (primary_expression
+            (string_literal
+              (double_quoted_string
+                (string_text_double)))))))
+    (output_block
+      (bound_declaration
+        (type
+          (primitive_type))
+        (identifier)
+        (expression
+          (apply_expression
+            (identifier)
+            (expression
+              (apply_expression
+                (identifier)))))))))
+
+================================================================================
+Task with meta and parameter_meta
+================================================================================
+
+version 1.2
+
+task documented {
+    meta {
+        description: "A task"
+        tags: ["bio", "align"]
+    }
+
+    parameter_meta {
+        x: {
+            help: "An input"
+        }
+    }
+
+    input {
+        Int x
+    }
+
+    command <<<
+        echo ~{x}
+    >>>
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (meta_block
+      (meta_attribute
+        (identifier)
+        (meta_value
+          (meta_string
+            (double_quoted_string
+              (string_text_double)))))
+      (meta_attribute
+        (identifier)
+        (meta_value
+          (meta_array
+            (meta_value
+              (meta_string
+                (double_quoted_string
+                  (string_text_double))))
+            (meta_value
+              (meta_string
+                (double_quoted_string
+                  (string_text_double))))))))
+    (parameter_meta_block
+      (meta_attribute
+        (identifier)
+        (meta_value
+          (meta_object
+            (meta_attribute
+              (identifier)
+              (meta_value
+                (meta_string
+                  (double_quoted_string
+                    (string_text_double)))))))))
+    (input_block
+      (declaration
+        (type
+          (primitive_type))
+        (identifier)))
+    (command_block
+      (command_block_heredoc
+        (command_text_heredoc)
+        (placeholder
+          (expression
+            (primary_expression
+              (identifier))))))))
+
+================================================================================
+Task with comments in bash
+================================================================================
+
+version 1.2
+
+task samtools {
+    input {
+        File bam
+        Int threads
+    }
+
+    command <<<
+        # samtools uses one more core than --threads
+        samtools view -@ ~{threads} ~{bam}
+    >>>
+
+    output {
+        File result = "output.bam"
+    }
+}
+
+--------------------------------------------------------------------------------
+
+(document
+  (version
+    (version_identifier))
+  (task
+    (identifier)
+    (input_block
+      (declaration
+        (type
+          (primitive_type))
+        (identifier))
+      (declaration
+        (type
+          (primitive_type))
+        (identifier)))
+    (command_block
+      (command_block_heredoc
+        (comment)
+        (command_text_heredoc)
+        (placeholder
+          (expression
+            (primary_expression
+              (identifier))))
+        (placeholder
+          (expression
+            (primary_expression
+              (identifier))))))
+    (output_block
+      (bound_declaration
+        (type
+          (primitive_type))
+        (identifier)
+        (expression
+          (primary_expression
+            (string_literal
+              (double_quoted_string
+                (string_text_double)))))))))
